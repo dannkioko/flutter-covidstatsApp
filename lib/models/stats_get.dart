@@ -1,13 +1,16 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 
-Future<Stats> fetchStats(String country) async {
+Future<Stats> fetchStats(String country, [String date]) async {
+  String uri = 'https://covid-193.p.rapidapi.com/statistics?country=$country';
+  if(date !=null){
+    uri = "https://covid-193.p.rapidapi.com/history?country=$country&day=$date";
+  }
   if (country == "") {
     throw Exception('Failed to load data');
   } else {
     final response = await http.get(
-        'https://covid-193.p.rapidapi.com/statistics?country=$country',
+        uri,
         headers: {
           'x-rapidapi-key': '3bda545204msh485aa6b48016377p146018jsn543e0461cb80'
         });

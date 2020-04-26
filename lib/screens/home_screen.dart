@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/models/stats_get.dart';
+import 'package:flutterapp/widgets/day_stats.dart';
 import 'package:flutterapp/widgets/day_stats_header.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -23,7 +24,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildSearchField() {
     return TextField(
       onSubmitted: (value){
-        futureStats = fetchStats(value);
+        searchQuery = value;
+        futureStats = fetchStats(searchQuery);
         Navigator.pop(context);
       },
       controller: _searchQueryController,
@@ -219,7 +221,113 @@ class _HomeScreenState extends State<HomeScreen> {
             );
             }
             else{
-              return(Text(""));
+              return Container(
+              height: 320.0,
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
+              ),
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 30.0, top: 20.0),
+                    child: Text("",
+                        style: TextStyle(
+                          fontSize: 30.0,
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: 1.0,
+                        )),
+                  ),
+                  Column(
+                    children: <Widget>[
+                      Text(
+                        "Total Cases",
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: 10.0,
+                          bottom: 5.0,
+                        ),
+                        child: Text("",
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 40.0,
+                              fontWeight: FontWeight.bold,
+                            )),
+                      ),
+                      Text(
+                        "Active Cases",
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: 10.0,
+                          bottom: 5.0,
+                        ),
+                        child: Text("",
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 30.0,
+                              fontWeight: FontWeight.bold,
+                            )),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 60.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Column(
+                          children: <Widget>[
+                            Text(
+                              "Recovered",
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            Text(
+                              "",
+                              style: TextStyle(
+                                fontSize: 30.0,
+                                color: Colors.green,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: <Widget>[
+                            Text(
+                              "Deaths",
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            Text(
+                              "",
+                              style: TextStyle(
+                                fontSize: 30.0,
+                                color: Colors.red,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            );
             }
           },
         ),
