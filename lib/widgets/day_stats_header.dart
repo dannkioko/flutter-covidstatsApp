@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutterapp/models/stats_get.dart';
+import 'package:intl/intl.dart';
 
 class DayStats extends StatefulWidget {
-  DayStats();
+  Future<Stats> futureStats;
+  String searchQuery;
+  Function(Future<Stats>) callback;
+  DayStats(this.searchQuery, this.callback);
 
   @override
   _DayStatsState createState() => _DayStatsState();
@@ -9,15 +15,12 @@ class DayStats extends StatefulWidget {
 
 class _DayStatsState extends State<DayStats> {
   int selectedIndex = 0;
-  _DayStatsState();
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 70.0,
       decoration: BoxDecoration(
-        color: Colors.yellow,
-        //borderRadius: BorderRadius.only(topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
-        //color: Theme.of(context).accentColor,
+        color: Theme.of(context).accentColor,
       ),
       child: Column(
         children: <Widget>[
@@ -32,6 +35,7 @@ class _DayStatsState extends State<DayStats> {
                       onTap: () {
                         setState(() {
                           selectedIndex = 0;
+                          widget.callback(fetchStats(widget.searchQuery));
                         });
                       },
                       child: selectedIndex == 0
@@ -58,6 +62,8 @@ class _DayStatsState extends State<DayStats> {
                       onTap: () {
                         setState(() {
                           selectedIndex = 1;
+                          var date = DateFormat('yyyy-MM-dd').format(DateTime.now().subtract(Duration(days:1)));
+                          widget.callback(fetchStats(widget.searchQuery,date));
                         });
                       },
                       child: selectedIndex == 1

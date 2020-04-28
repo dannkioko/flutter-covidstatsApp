@@ -22,7 +22,6 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     futureStats = fetchStats(searchQuery);
   }
-
   Widget _buildSearchField() {
     return TextField(
       onSubmitted: (value) {
@@ -96,6 +95,11 @@ class _HomeScreenState extends State<HomeScreen> {
       updateSearchQuery("");
     });
   }
+  callback(a){
+    setState( (){
+      futureStats = a;
+    });
+  }
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
             return Column(
               children: <Widget>[
                 TopStats(snapshot),
-                DayStats(),
+                DayStats(searchQuery, callback),
                 StatsWidget(snapshot),
               ],
             );

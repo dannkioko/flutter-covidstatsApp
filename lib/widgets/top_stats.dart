@@ -117,20 +117,17 @@ class TopStats extends StatelessWidget {
           ],
         ),
       );
-    }
-    else{
+    } else {
       return Container(
         height: 320.0,
         decoration: BoxDecoration(
-          color: Colors.blue,
-          //color: Theme.of(context).primaryColor,
+          color: Theme.of(context).primaryColor,
         ),
         child: Column(
           children: <Widget>[
             Padding(
               padding: EdgeInsets.only(bottom: 30.0, top: 20.0),
-              child: Text(
-                  "",
+              child: Text("",
                   style: TextStyle(
                     fontSize: 30.0,
                     fontWeight: FontWeight.w600,

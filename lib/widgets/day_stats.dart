@@ -27,7 +27,8 @@ class StatsWidget extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(right: 100.0),
                       child: Text(
-                        "new",
+                        snapshot.data.newCases==null?"0"
+:                        "${snapshot.data.newCases}",
                         style: TextStyle(fontSize: 20.0),
                       ),
                     ),
@@ -48,7 +49,8 @@ class StatsWidget extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(right: 100.0),
                       child: Text(
-                        "critical",
+                        snapshot.data.criticalCases != null?
+                        "${snapshot.data.criticalCases}":"0",
                         style: TextStyle(fontSize: 20.0),
                       ),
                     ),
@@ -70,8 +72,8 @@ class StatsWidget extends StatelessWidget {
                     ),
                     Padding(
                       padding: EdgeInsets.only(right: 100.0),
-                      child: Text(
-                        "deaths",
+                      child: Text(snapshot.data.newDeaths==null?"0":
+                        "${snapshot.data.newDeaths}",
                         style: TextStyle(fontSize: 20.0),
                       ),
                     ),
