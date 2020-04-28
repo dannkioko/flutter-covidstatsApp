@@ -1,4 +1,4 @@
-name: flutterapp
+name: covidstats
 description: A new Flutter application.
 
 # The following defines the version and build number for your application.
@@ -29,6 +29,11 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: "^0.7.3"
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icons/download.png"
 
 
 # For information on the generic Dart part of this file, see the

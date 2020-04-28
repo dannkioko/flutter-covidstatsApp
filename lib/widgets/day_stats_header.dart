@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutterapp/models/stats_get.dart';
+import 'package:covidstats/models/stats_get.dart';
 import 'package:intl/intl.dart';
 
 class DayStats extends StatefulWidget {
@@ -22,7 +22,7 @@ class _DayStatsState extends State<DayStats> {
       decoration: BoxDecoration(
         color: Theme.of(context).accentColor,
       ),
-      child: Column(
+      child: Row(
         children: <Widget>[
           Container(
               padding: EdgeInsets.only(top: 10.0),

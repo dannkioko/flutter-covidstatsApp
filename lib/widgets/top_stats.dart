@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutterapp/models/stats_get.dart';
+import 'package:covidstats/models/stats_get.dart';
 
 class TopStats extends StatelessWidget {
   final AsyncSnapshot<Stats> snapshot;

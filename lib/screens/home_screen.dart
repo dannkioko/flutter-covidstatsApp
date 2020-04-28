@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutterapp/models/stats_get.dart';
-import 'package:flutterapp/widgets/day_stats.dart';
-import 'package:flutterapp/widgets/day_stats_header.dart';
-import 'package:flutterapp/widgets/top_stats.dart';
+import 'package:flutter/rendering.dart';
+import 'package:covidstats/models/stats_get.dart';
+import 'package:covidstats/widgets/day_stats.dart';
+import 'package:covidstats/widgets/day_stats_header.dart';
+import 'package:covidstats/widgets/top_stats.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -16,29 +17,52 @@ class _HomeScreenState extends State<HomeScreen> {
   TextEditingController _searchQueryController = TextEditingController();
   bool _isSearching = false;
   String searchQuery = "all";
+  List<String> countries = ["kenya", "uganda", "tanzania"];
+  String filter;
 
   @override
   void initState() {
     super.initState();
+    // _searchQueryController.addListener(() {
+    //   setState(() {
+    //     filter = _searchQueryController.text;
+    //   });
+    // });
     futureStats = fetchStats(searchQuery);
   }
+
   Widget _buildSearchField() {
-    return TextField(
-      onSubmitted: (value) {
-        this.searchQuery = value;
-        futureStats = fetchStats(searchQuery);
-        Navigator.pop(context);
-      },
-      controller: _searchQueryController,
-      autofocus: true,
-      decoration: InputDecoration(
-        hintText: "Search Country...",
-        border: InputBorder.none,
-        hintStyle: TextStyle(color: Colors.black),
+    return Column(children: <Widget>[
+      Padding(
+        padding: EdgeInsets.only(top: 20.0),
+        child: Container(
+          color: Colors.blue,
+        ),
       ),
-      style: TextStyle(color: Colors.black, fontSize: 16.0),
-      //onChanged: (query) {updateSearchQuery(query);},
-    );
+      TextField(
+        onSubmitted: (value) {
+          this.searchQuery = value;
+          futureStats = fetchStats(searchQuery);
+          Navigator.pop(context);
+        },
+        controller: _searchQueryController,
+        autofocus: true,
+        decoration: InputDecoration(
+          hintText: "Search Country...",
+          border: InputBorder.none,
+          hintStyle: TextStyle(color: Colors.black),
+        ),
+        style: TextStyle(color: Colors.black, fontSize: 16.0),
+        onChanged: (query) {
+          updateSearchQuery(query);
+        },
+      ),
+      // ListView.builder(
+      //     itemCount: countries.length,
+      //     itemBuilder: (context, index) {
+      //       return Card(child: Text(countries[index]));
+      //     }),
+    ]);
   }
 
   List<Widget> _buildActions() {
@@ -95,8 +119,9 @@ class _HomeScreenState extends State<HomeScreen> {
       updateSearchQuery("");
     });
   }
-  callback(a){
-    setState( (){
+
+  callback(a) {
+    setState(() {
       futureStats = a;
     });
   }
