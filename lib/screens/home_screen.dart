@@ -1,8 +1,8 @@
+import 'package:covidstats/widgets/bottom_stats.dart';
+import 'package:covidstats/widgets/nev_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:covidstats/models/stats_get.dart';
-import 'package:covidstats/widgets/day_stats.dart';
-import 'package:covidstats/widgets/day_stats_header.dart';
 import 'package:covidstats/widgets/top_stats.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -34,16 +34,18 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildSearchField() {
     return Column(children: <Widget>[
       Padding(
-        padding: EdgeInsets.only(top: 20.0),
+        padding: EdgeInsets.only(top: 0.0),
         child: Container(
           color: Colors.blue,
         ),
       ),
       TextField(
         onSubmitted: (value) {
-          this.searchQuery = value;
-          futureStats = fetchStats(searchQuery);
+          futureStats = fetchStats(value);
           Navigator.pop(context);
+          setState(() {
+            searchQuery = value;
+          });
         },
         controller: _searchQueryController,
         autofocus: true,
@@ -101,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void updateSearchQuery(String newQuery) {
     setState(() {
-      searchQuery = newQuery;
+      this.searchQuery = newQuery;
     });
   }
 
@@ -120,33 +122,52 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  callback(a) {
-    setState(() {
-      futureStats = a;
-    });
-  }
-
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Theme.of(context).primaryColor,
-      appBar: AppBar(
-        elevation: 0.0,
-        leading: _isSearching ? const BackButton() : Container(),
-        title: _isSearching ? _buildSearchField() : Text("COVID-19"),
-        actions: _buildActions(),
-      ),
-      body: FutureBuilder<Stats>(
-          future: futureStats,
-          builder: (context, snapshot) {
-            return Column(
-              children: <Widget>[
-                TopStats(snapshot),
-                DayStats(searchQuery, callback),
-                StatsWidget(snapshot),
-              ],
-            );
-          }),
-    );
+        resizeToAvoidBottomInset: false,
+        backgroundColor: Theme.of(context).primaryColor,
+        appBar: AppBar(
+          elevation: 0.0,
+          leading: _isSearching ? const BackButton() : Container(),
+          title: _isSearching ? _buildSearchField() : Text("COVID-19"),
+          actions: _buildActions(),
+        ),
+        body: GestureDetector(
+          onHorizontalDragEnd: (DragEndDetails details) {
+            if (details.primaryVelocity == 0) return;
+            if (details.primaryVelocity.compareTo(0) == -1) {
+              // Navigator.push(context,
+              //     MaterialPageRoute(builder: (context) => GraphScreen(searchQuery)));
+            } else
+              return;
+          },
+          child: Column(
+            children: <Widget>[
+              FutureBuilder<Stats>(
+                  future: futureStats,
+                  builder: (context, snapshot) {
+                    return TopStats(snapshot);
+                  }),
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30.0),
+                        topRight: Radius.circular(30.0)),
+                    color: Theme.of(context).accentColor,
+                    //Theme.of(context).accentColor,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      BottomStats(searchQuery),
+                      NavText(),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ));
   }
 }
