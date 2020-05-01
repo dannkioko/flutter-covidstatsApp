@@ -132,42 +132,30 @@ class _HomeScreenState extends State<HomeScreen> {
           title: _isSearching ? _buildSearchField() : Text("COVID-19"),
           actions: _buildActions(),
         ),
-        body: GestureDetector(
-          onHorizontalDragEnd: (DragEndDetails details) {
-            if (details.primaryVelocity == 0) return;
-            if (details.primaryVelocity.compareTo(0) == -1) {
-              // Navigator.push(context,
-              //     MaterialPageRoute(builder: (context) => GraphScreen(searchQuery)));
-            } else
-              return;
-          },
-          child: Column(
-            children: <Widget>[
-              FutureBuilder<Stats>(
-                  future: futureStats,
-                  builder: (context, snapshot) {
-                    return TopStats(snapshot);
-                  }),
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30.0),
-                        topRight: Radius.circular(30.0)),
-                    color: Theme.of(context).accentColor,
-                    //Theme.of(context).accentColor,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      BottomStats(searchQuery),
-                      NavText(),
-                    ],
-                  ),
+        body: Column(
+          children: <Widget>[
+            FutureBuilder<Stats>(
+                future: futureStats,
+                builder: (context, snapshot) {
+                  return TopStats(snapshot);
+                }),
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30.0),
+                      topRight: Radius.circular(30.0)),
+                  color: Theme.of(context).accentColor,
+                  //Theme.of(context).accentColor,
+                ),
+                child: Column(
+                  children: <Widget>[
+                    BottomStats(searchQuery),
+                  ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ));
   }
 }
