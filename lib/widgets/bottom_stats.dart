@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:covidstats/widgets/day_stats_header.dart';
 
 class BottomStats extends StatefulWidget {
-  String searchQuery;
+  final String searchQuery;
   BottomStats(this.searchQuery);
-  
+
   @override
   _BottomStatsState createState() => _BottomStatsState();
 }
@@ -14,11 +14,12 @@ class BottomStats extends StatefulWidget {
 class _BottomStatsState extends State<BottomStats> {
   Future<Stats> futureStats;
 
-  callback(a){
+  callback(a) {
     setState(() {
       futureStats = a;
     });
   }
+
   @override
   void initState() {
     futureStats = fetchStats(widget.searchQuery);
@@ -30,10 +31,10 @@ class _BottomStatsState extends State<BottomStats> {
       children: <Widget>[
         DayHeader(widget.searchQuery, callback),
         FutureBuilder<Stats>(
-                  future: futureStats,
-                  builder: (context, snapshot) {
-                    return StatsWidget(snapshot);
-                  }),
+            future: futureStats,
+            builder: (context, snapshot) {
+              return StatsWidget(snapshot);
+            }),
       ],
     );
   }

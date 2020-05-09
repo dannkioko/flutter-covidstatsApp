@@ -1,5 +1,4 @@
 import 'package:covidstats/widgets/bottom_stats.dart';
-import 'package:covidstats/widgets/nev_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:covidstats/models/stats_get.dart';
@@ -55,9 +54,9 @@ class _HomeScreenState extends State<HomeScreen> {
           hintStyle: TextStyle(color: Colors.black),
         ),
         style: TextStyle(color: Colors.black, fontSize: 16.0),
-        onChanged: (query) {
-          updateSearchQuery(query);
-        },
+        // onChanged: (query) {
+        //   updateSearchQuery(query);
+        // },
       ),
       // ListView.builder(
       //     itemCount: countries.length,
